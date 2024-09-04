@@ -3,3 +3,4 @@ dist
 public/photos
 ratings.json
 target/
+.env
