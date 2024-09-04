@@ -56,7 +56,7 @@ Promise.all([
 function getTopPhoto(excludePhoto) {
   const sortedPhotos = Object.entries(ratings)
     .filter(([photo]) => !displayedPhotos.has(photo) && photo !== excludePhoto)
-    .sort((a, b) => b[1] - a[1]);
+    .sort((a, b) => a[1] - b[1]);
 
   if (sortedPhotos.length === 0) {
     if (lastClickedPhoto) {
