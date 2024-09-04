@@ -3,10 +3,39 @@ let ratings = {};
 let displayedPhotos = new Set();
 let allPhotosRated = false;
 let lastClickedPhoto = null;
+let csrfToken = "";
+
+function getCsrfToken() {
+  return document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("XSRF-TOKEN="))
+    .split("=")[1];
+}
+
+// Function to add CSRF token to headers
+function addCsrfHeader(headers = {}) {
+  return {
+    ...headers,
+    "X-CSRF-Token": getCsrfToken(),
+  };
+}
+
+fetch("/get-csrf-token", { credentials: "same-origin" })
+  .then(() => {
+    csrfToken = getCsrfToken();
+    init();
+  })
+  .catch((error) => console.error("Error fetching CSRF token:", error));
 
 Promise.all([
-  fetch("/photos").then((response) => response.json()),
-  fetch("/initial-ratings").then((response) => response.json()),
+  fetch("/photos", {
+    headers: addCsrfHeader(),
+    credentials: "same-origin",
+  }).then((response) => response.json()),
+  fetch("/initial-ratings", {
+    headers: addCsrfHeader(),
+    credentials: "same-origin",
+  }).then((response) => response.json()),
 ])
   .then(([photoData, ratingData]) => {
     photos.push(...photoData);
@@ -48,10 +77,11 @@ function getTopPhoto(excludePhoto) {
 function sendRatingsToServer() {
   fetch("/update-ratings", {
     method: "POST",
-    headers: {
+    headers: addCsrfHeader({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify({ ratings }),
+    credentials: "same-origin",
   })
     .then((response) => {
       if (!response.ok) {
@@ -92,12 +122,6 @@ function showWinner() {
   );
 
   allPhotosRated = true;
-
-  fetch("/summary")
-    .then((response) => response.json())
-    .then((summary) => {
-      console.log("Final Ratings:", summary);
-    });
 }
 
 window.addEventListener("close", (event) => {
