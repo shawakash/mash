@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mash</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                background-color: #f0f0f0;
+            }
+            header {
+                background-color: #4caf50;
+                color: white;
+                text-align: center;
+                padding: 1rem;
+                font-size: 2rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            #app {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+            }
+            .photo-container {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                max-width: 1200px;
+            }
+            .photo {
+                width: 45%;
+                max-width: 500px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+            .photo:hover {
+                transform: scale(1.05);
+            }
+            #winnerPhoto {
+                max-width: 80%;
+                max-height: 70vh;
+                display: none;
+                margin: auto;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            }
+            #message {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-top: 1rem;
+                display: none;
+            }
+            #refreshButton {
+                display: none;
+                margin: 1rem auto;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            #refreshButton:hover {
+                background-color: #45a049;
+            }
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <header>Mash</header>
+        <div id="app">
+            <div class="photo-container">
+                <img id="photo1" src="" alt="Photo 1" class="photo" />
+                <img id="photo2" src="" alt="Photo 2" class="photo" />
+            </div>
+            <img id="winnerPhoto" src="" alt="Winner Photo" />
+            <div id="message"></div>
+            <button id="refreshButton" onclick="location.reload()">
+                Refresh to Start Over
+            </button>
+        </div>
+        <footer>
+            No offense intended to any photos. This is just for fun!
+            <br />
+            &copy; 2023 Mash. All rights reserved.
+        </footer>
+        <script src="./script.js"></script>
+    </body>
+</html>
