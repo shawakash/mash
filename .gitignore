@@ -2,3 +2,4 @@ node_modules
 dist
 public/photos
 ratings.json
+target/

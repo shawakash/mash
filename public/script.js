@@ -66,11 +66,13 @@ function sendRatingsToServer() {
 function showWinner() {
   const winnerPhoto = lastClickedPhoto;
   const photoContainer = document.querySelector(".photo-container");
+  const winnerContainer = document.getElementById("winnerContainer");
   const winnerPhotoElement = document.getElementById("winnerPhoto");
   const messageElement = document.getElementById("message");
   const refreshButton = document.getElementById("refreshButton");
 
   photoContainer.style.display = "none";
+  winnerContainer.style.display = "flex";
   winnerPhotoElement.src = `./photos/${winnerPhoto}`;
   winnerPhotoElement.style.display = "block";
   messageElement.textContent =

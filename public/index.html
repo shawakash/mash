@@ -75,12 +75,115 @@
             #refreshButton:hover {
                 background-color: #45a049;
             }
+            #winnerContainer {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 800px;
+                margin: auto;
+            }
+
+            #winnerPhoto {
+                max-width: 100%;
+                height: auto;
+                max-height: 70vh;
+                object-fit: contain;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            }
+
+            #message {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-top: 1rem;
+            }
+
+            #refreshButton {
+                margin-top: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            #refreshButton:hover {
+                background-color: #45a049;
+            }
+
+            @media (max-width: 768px) {
+                #winnerPhoto {
+                    max-height: 50vh;
+                }
+
+                #message {
+                    font-size: 1.2rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                #winnerPhoto {
+                    max-height: 40vh;
+                }
+
+                #message {
+                    font-size: 1rem;
+                }
+
+                #refreshButton {
+                    font-size: 0.9rem;
+                    padding: 0.4rem 0.8rem;
+                }
+            }
             footer {
                 background-color: #333;
                 color: white;
                 text-align: center;
                 padding: 1rem;
                 font-size: 0.9rem;
+            }
+            @media (max-width: 768px) {
+                .photo-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .photo {
+                    width: 90%;
+                    max-width: 400px;
+                    margin-bottom: 1rem;
+                }
+                #winnerPhoto {
+                    max-width: 90%;
+                }
+                #message {
+                    font-size: 1.2rem;
+                }
+                header {
+                    font-size: 1.5rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                #app {
+                    padding: 1rem;
+                }
+                .photo {
+                    width: 100%;
+                }
+                #message {
+                    font-size: 1rem;
+                }
+                header {
+                    font-size: 1.2rem;
+                    padding: 0.75rem;
+                }
+                footer {
+                    font-size: 0.8rem;
+                }
             }
         </style>
     </head>
@@ -91,11 +194,13 @@
                 <img id="photo1" src="" alt="Photo 1" class="photo" />
                 <img id="photo2" src="" alt="Photo 2" class="photo" />
             </div>
-            <img id="winnerPhoto" src="" alt="Winner Photo" />
-            <div id="message"></div>
-            <button id="refreshButton" onclick="location.reload()">
-                Refresh to Start Over
-            </button>
+            <div id="winnerContainer">
+                <img id="winnerPhoto" src="" alt="Winner Photo" />
+                <div id="message"></div>
+                <button id="refreshButton" onclick="location.reload()">
+                    Refresh to Start Over
+                </button>
+            </div>
         </div>
         <footer>
             No offense intended to any photos. This is just for fun!
