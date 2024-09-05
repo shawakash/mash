@@ -4,6 +4,8 @@ let displayedPhotos = new Set();
 let allPhotosRated = false;
 let lastClickedPhoto = null;
 let csrfToken = "";
+let comparisonCount = 0;
+const COMPARISON_THRESHOLD = 10;
 
 function getCsrfToken() {
   return document.cookie
@@ -23,7 +25,6 @@ function addCsrfHeader(headers = {}) {
 fetch("/get-csrf-token", { credentials: "same-origin" })
   .then(() => {
     csrfToken = getCsrfToken();
-    init();
   })
   .catch((error) => console.error("Error fetching CSRF token:", error));
 
@@ -39,7 +40,7 @@ Promise.all([
 ])
   .then(([photoData, ratingData]) => {
     photos.push(...photoData);
-    ratings = ratingData;
+    ratings = { ...ratingData };
 
     photos.forEach((photo) => {
       if (!(photo in ratings)) {
@@ -131,7 +132,8 @@ window.addEventListener("close", (event) => {
 });
 
 function updateRatings(winner, loser) {
-  const k = 32;
+  console.log("Before update:", { winner, loser, ratings: { ...ratings } });
+  const k = 12;
   const ratingWinner = ratings[winner];
   const ratingLoser = ratings[loser];
 
@@ -140,6 +142,7 @@ function updateRatings(winner, loser) {
 
   ratings[winner] = ratingWinner + k * (1 - expectedScoreWinner);
   // ratings[loser] = ratingLoser + k * (expectedScoreWinner - 1);
+  console.log("After update:", { winner, loser, ratings: { ...ratings } });
 }
 
 const init = () => {
@@ -192,4 +195,9 @@ function updatePhoto(photoElement, winnerPhoto) {
     return;
   }
   photoElement.src = `./photos/${newPhoto}`;
+  comparisonCount++;
+  if (comparisonCount >= COMPARISON_THRESHOLD) {
+    sendRatingsToServer();
+    comparisonCount = 0;
+  }
 }
